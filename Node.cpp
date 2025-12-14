@@ -4,3 +4,5 @@ Node::Node(int i, string n){
     id = i;
     name = n;
 }
+
+ // other functions iff, to be defined here
