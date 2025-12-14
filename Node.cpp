@@ -5,4 +5,4 @@ Node::Node(int i, string n){
     name = n;
 }
 
- // other functions iff, to be defined here
+ // Node's constructor
