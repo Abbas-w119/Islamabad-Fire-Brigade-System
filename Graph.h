@@ -15,7 +15,7 @@ private:
 public:
     Graph(int vertices);
     void addEdge(int u, int v, int distance);
-    vector<pair<int, int>> getNeighbors(int u);
+    vector<vector<pair<int, int>>> getAdj() const;
     int getVertexCount();
 };
 
