@@ -10,8 +10,8 @@ void Graph::addEdge(int u, int v, int distance) {
     adj[v].push_back({u, distance}); // Undirected road
 }
 
-vector<pair<int, int>> Graph::getNeighbors(int u) {
-    return adj[u];
+vector<vector<pair<int, int>>> Graph::getAdj() const {
+    return adj;
 }
 
 int Graph::getVertexCount() {
