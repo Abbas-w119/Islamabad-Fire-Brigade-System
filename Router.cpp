@@ -1,6 +1,7 @@
 #include "Router.h"
 #include "Dijkstra.h"
 #include <sstream>
+#include<climits>
 
 string Router::processRequest(Graph& graph, int fireNode) {
     vector<int> stations = {0, 1}; // Example fire stations
