@@ -1,42 +1,45 @@
-#include <winsock2.h>
 #include <iostream>
-
+#include <winsock2.h>
 #pragma comment(lib, "ws2_32.lib")
-using namespace std;
 
 int main() {
-
     WSADATA wsa;
-    SOCKET serverSocket, clientSocket;
+    SOCKET serverSock, clientSock;
     sockaddr_in serverAddr, clientAddr;
     int clientSize = sizeof(clientAddr);
-    char buffer[1024];
 
     WSAStartup(MAKEWORD(2,2), &wsa);
 
-    serverSocket = socket(AF_INET, SOCK_STREAM, 0);
+    serverSock = socket(AF_INET, SOCK_STREAM, 0);
 
     serverAddr.sin_family = AF_INET;
+    serverAddr.sin_port = htons(8080);
     serverAddr.sin_addr.s_addr = INADDR_ANY;
-    serverAddr.sin_port = htons(9000);
 
-    bind(serverSocket, (sockaddr*)&serverAddr, sizeof(serverAddr));
-    listen(serverSocket, 1);
+    bind(serverSock, (sockaddr*)&serverAddr, sizeof(serverAddr));
+    listen(serverSock, 1);
 
-    cout << "Server waiting...\n";
-    clientSocket = accept(serverSocket, (sockaddr*)&clientAddr, &clientSize);
-    cout << "Client connected\n";
+    std::cout << "Server waiting...\n";
+    clientSock = accept(serverSock, (sockaddr*)&clientAddr, &clientSize);
+    std::cout << "Client connected\n";
 
-    while (true) {
-        memset(buffer, 0, sizeof(buffer));
-        recv(clientSocket, buffer, sizeof(buffer), 0);
+    // Receive fire location
+    double lat, lon;
+    recv(clientSock, (char*)&lat, sizeof(lat), 0);
+    recv(clientSock, (char*)&lon, sizeof(lon), 0);
 
-        double lat, lon;
-        sscanf(buffer, "%lf,%lf", &lat, &lon);
+    std::cout << "Fire at: " << lat << " , " << lon << std::endl;
 
-        cout << "Fire at: " << lat << " , " << lon << endl;
-    }
+    // Send route (Phase 6)
+    const char* route =
+        "33.6844,73.0479;"
+        "33.6938,73.0652;"
+        "33.7000,73.0800\n";
 
-    closesocket(serverSocket);
+    send(clientSock, route, strlen(route), 0);
+
+    closesocket(clientSock);
+    closesocket(serverSock);
     WSACleanup();
+    return 0;
 }
