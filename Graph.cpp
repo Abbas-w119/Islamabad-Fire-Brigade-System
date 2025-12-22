@@ -14,6 +14,3 @@ vector<vector<pair<int, int>>> Graph::getAdj() const {
     return adj;
 }
 
-int Graph::getVertexCount() {
-    return V;
-}
