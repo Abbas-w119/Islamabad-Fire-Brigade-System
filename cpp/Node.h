@@ -1,16 +1,14 @@
 #ifndef NODE_H
 #define NODE_H
 
-#include<string>
-using namespace std;
+#include <string>
 
-struct Node{
+struct Node {
     int id;
-    string name;
+    std::string name;
+    double x, y;
 
-Node(int i, string n){
-
-}
+    Node(int id, std::string name, double x, double y);
 };
 
 #endif
