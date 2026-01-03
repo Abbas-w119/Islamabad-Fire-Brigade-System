@@ -10,6 +10,7 @@ struct Incident {
     int severity; // 1=Low, 2=Medium, 3=Critical
 };
 
+
 class IncidentQueue {
 private:
     queue<Incident> incidentQueue;
